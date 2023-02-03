@@ -19,7 +19,8 @@ def adminProductPostpagoView(request):
     if request.method == "GET":
         translates =  TranslateProductPostpago.objects.all()
         serializer = TranslateProductSerializer(translates, many=True)
-        return Response(serializer.data)
+        # return Response(serializer.data)
+        return (serializer.data)
     
     if request.method == "DELETE":
         translate = TranslateProductPostpago.objects.filter(id='1').first()
