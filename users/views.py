@@ -2,9 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
+from azureControl.azureControl import Azure_db
 from .models import User
 import jwt, datetime
 import json
+
+db = Azure_db()
 
 # Create your views here.
 class RegisterView(APIView):
@@ -17,20 +20,22 @@ class RegisterView(APIView):
 
 class LoginView(APIView):
     def post(self, request):
-        print('activado el post')
         email = request.data['email']
         password = request.data['password']
-
-        user = User.objects.filter(email=email).first()
+        try:
+            user = db.read_item('usuarios', email)
+        except Exception as e:
+            user = None
 
         if user is None:
             raise AuthenticationFailed('Usuario no encontrado')
         
-        if not user.check_password(password):
+        if password != user['password']:
             raise AuthenticationFailed('Clave incorrecta')
         
+        
         payload = {
-            'id' : user.id,
+            'id' : user['serial'],
             'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes= 60),
             'iat' : datetime.datetime.utcnow()
         }
