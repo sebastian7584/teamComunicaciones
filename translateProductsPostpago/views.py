@@ -13,7 +13,7 @@ def adminProductPostpagoView(request):
     if request.method =="POST":
         serializer = TranslateProductSerializer(data = request.data)
         serializer.is_valid()
-        # serializer.save()
+        serializer.save()
         return Response(serializer.data)
 
     if request.method == "GET":
