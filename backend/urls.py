@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path('api/translateProducts/', include('translateProducts.urls')),
     path('api/translateProductsPostpago/', include('translateProductsPostpago.urls')),
-    staticfiles_urlpatterns()
 ]
+ 
+urlpatterns += staticfiles_urlpatterns()
