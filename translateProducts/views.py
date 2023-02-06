@@ -41,7 +41,8 @@ def translateProductView(request):
         traductor = {}
         validate = True
         for i in translates:
-            traductor['id'] = i
+            traductor[i['id']] = i
+        print(traductor)
 
         for i in range (len(data)):
             nombre = data[i][0]
