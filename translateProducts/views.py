@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializer import TranslateProductSerializer
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import AuthenticationFailed
 from .models import TranslateProduct
 import json
 from azureControl.azureControl import Azure_db
@@ -18,13 +19,17 @@ def adminProductView(request):
         iva = request.data['iva']
         active = request.data['active']
         data = {'id':equipo,'stok':stok,'iva':iva,'active':active}
-        db.create_item('traduccion_equipos_prepago', data)
+        print(data)
+        try:
+            db.create_item('traduccion_equipos_prepago', data)
+        except:
+            raise AuthenticationFailed('Error')
+
         return Response(data)
 
     if request.method == "GET":
-        translates =  TranslateProduct.objects.all()
-        serializer = TranslateProductSerializer(translates, many=True)
-        return Response(serializer.data)
+        data = db.read_items('traduccion_equipos_prepago')
+        return Response(data)
     
     if request.method == "DELETE":
         translate = TranslateProduct.objects.filter(id='21').first()
