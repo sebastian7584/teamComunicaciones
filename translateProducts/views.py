@@ -5,6 +5,8 @@ from .serializer import TranslateProductSerializer
 from rest_framework.decorators import api_view
 from .models import TranslateProduct
 import json
+from azureControl.azureControl import Azure_db
+db = Azure_db()
 
 
 @api_view(["GET", "POST","DELETE"])
@@ -32,15 +34,15 @@ def translateProductView(request):
     if request.method == "POST":
         data = request.body
         data = json.loads(data)
-        translates =  TranslateProduct.objects.all()
-        serializer = TranslateProductSerializer(translates, many=True)
+        translates = db.read_items('traduccion_equipos_prepago')
         crear =[]
         newData = []
         lista=[]
         traductor = {}
         validate = True
-        for i in serializer.data:
-            traductor[i['equipo']] = i
+        for i in translates:
+            traductor['id'] = i
+
         for i in range (len(data)):
             nombre = data[i][0]
             try:

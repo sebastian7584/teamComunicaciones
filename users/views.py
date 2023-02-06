@@ -59,7 +59,6 @@ class UserView(APIView):
         data = request.body
         token = json.loads(data)
         token = token['jwt']
-        print(token)
         if not token:
             raise AuthenticationFailed('Debes estar logueado')
 
@@ -68,8 +67,8 @@ class UserView(APIView):
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Debes estar logueado')
      
-        user = User.objects.filter(id=payload['id']).first()
-        serializer = UserSerializer(user)
+        # user = User.objects.filter(id=payload['id']).first()
+        # serializer = UserSerializer(user)
         
 
         return Response({"detail":'d'})
