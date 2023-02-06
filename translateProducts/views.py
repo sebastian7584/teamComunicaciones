@@ -13,10 +13,13 @@ db = Azure_db()
 def adminProductView(request):
 
     if request.method =="POST":
-        serializer = TranslateProductSerializer(data = request.data)
-        serializer.is_valid()
-        serializer.save()
-        return Response(serializer.data)
+        equipo = request.data['equipo']
+        stok = request.data['stok']
+        iva = request.data['iva']
+        active = request.data['active']
+        data = {'id':equipo,'stok':stok,'iva':iva,'active':active}
+        db.create_item('traduccion_equipos_prepago', data)
+        return Response(data)
 
     if request.method == "GET":
         translates =  TranslateProduct.objects.all()
