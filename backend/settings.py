@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-j=@th%qs=^p*$)f6&(wp+^7h&6p$u+&w15gi6i8xwgpg7%_!tc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['134.122.26.24', 'localhost', 'teamcomunicaciones.com.co', 'https://teamcomunicaciones.com.co']
+ALLOWED_HOSTS = ['134.122.26.24', 'localhost', 'teamcomunicaciones.com.co', 'https://teamcomunicaciones.com.co', 'http://api.teamcomunicaciones.com.co']
 
 
 # Application definition
