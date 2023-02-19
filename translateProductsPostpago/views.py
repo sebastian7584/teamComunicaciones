@@ -12,7 +12,7 @@ import numpy as np
 db = Azure_db()
 
 
-@api_view(["GET", "POST","DELETE"])
+@api_view(["GET", "POST","DELETE", "PUT"])
 def adminProductPostpagoView(request):
 
     if request.method =="POST":
