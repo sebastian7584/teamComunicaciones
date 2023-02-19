@@ -10,7 +10,7 @@ class Sql_conexion:
         self.usuario = 'sa'
         self.contraseña = 'Soluciondig2015'
 
-        self.conn_key = ('Driver= {SQL Server};'
+        self.conn_key = ('Driver= {ODBC Driver 17 for SQL Server};'
                     f'Server={self.server};'
                     f'Database={self.bd};'
                     f'UID={self.usuario};'
