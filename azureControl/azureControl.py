@@ -45,6 +45,10 @@ class Azure_db:
         items_list = list(container.read_all_items(max_item_count=10))
         return items_list
     
+    def replace_item(self,container,data):
+        container = self.db.get_container_client(container)
+        container.replace_item(item=data, body=data)
+    
     def query_items(self, container, filters):
         container = self.db.get_container_client(container)
         query=f'SELECT * FROM c WHERE'
