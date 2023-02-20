@@ -31,7 +31,7 @@ def adminProductPostpagoView(request):
         )
         conexion = Sql_conexion(query)
         data = conexion.get_data()
-        data = np.asarray(data)
+        # data = np.asarray(data)
         if len(data)==0:
             raise AuthenticationFailed('Producto inexistente en Stok')
         
