@@ -64,6 +64,7 @@ def adminProductView(request):
         serializer = TranslateProductSerializer(translate)
         translate.delete()
         return Response({'s':'s'})
+        
     
     if request.method == "PUT":
         equipo = request.data['equipo']
@@ -75,7 +76,7 @@ def adminProductView(request):
         data['iva']=iva
         data['active']=active
         db.replace_item('traduccion_equipos_prepago',data)
-        
+        return Response({'s':'s'})
         
 
 
