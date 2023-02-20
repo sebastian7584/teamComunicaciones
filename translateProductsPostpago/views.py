@@ -71,7 +71,10 @@ def adminProductPostpagoView(request):
         stok = request.data['stok']
         iva = request.data['iva']
         active = request.data['active']
-        data = {'id':equipo,'stok':stok,'iva':iva,'active':active}
+        data = db.read_item('traduccion_equipos_postpago',equipo)
+        data['stok'] = stok
+        data['iva']=iva
+        data['active']=active
         db.replace_item('traduccion_equipos_postpago',data)
 
 @api_view(["POST"])
