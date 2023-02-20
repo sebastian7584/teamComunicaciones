@@ -48,6 +48,10 @@ class Azure_db:
     def replace_item(self,container,data):
         container = self.db.get_container_client(container)
         container.replace_item(item=data, body=data)
+
+    def delete_item(self,container,id):
+        container = self.db.get_container_client(container)
+        container.delete_item(item=id, partition_key=id)
     
     def query_items(self, container, filters):
         container = self.db.get_container_client(container)
