@@ -21,29 +21,31 @@ def adminProductPostpagoView(request):
         iva = request.data['iva']
         active = request.data['active']
         data = {'id':equipo,'stok':stok,'iva':iva,'active':active}
-        query= (
-            "SELECT TOP(1000) P.Nombre, lPre.nombre, ValorBruto "  
-            "FROM dbo.ldpProductosXAsociaciones lProd " 
-            "JOIN dbo.ldpListadePrecios  lPre ON lProd.ListaDePrecios = lPre.Codigo " 
-            "JOIN dbo.Productos  P ON lProd.Producto = P.Codigo " 
-            "JOIN dbo.TiposDeProducto  TP ON P.TipoDeProducto = TP.Codigo " 
-            f"WHERE TP.Nombre = 'Postpago' and P.Visible = 1 and P.Nombre = '{stok}';"
-        )
-        conexion = Sql_conexion(query)
-        data = conexion.get_data()
-        # data = np.asarray(data)
-        if len(data)==0:
-            raise AuthenticationFailed('Producto inexistente en Stok')
-        
-        listaStok = []
-        for dato in data:
-            nombreStok = dato[0]
-            if nombreStok not in listaStok:
-                listaStok.append(nombreStok)
-        for nstok in listaStok:
-            validacion = nstok == stok
-            if validacion == False:
-                raise AuthenticationFailed(f'intente usar {nstok} y no {stok}')
+
+        if active == '1':
+            query= (
+                "SELECT TOP(1000) P.Nombre, lPre.nombre, ValorBruto "  
+                "FROM dbo.ldpProductosXAsociaciones lProd " 
+                "JOIN dbo.ldpListadePrecios  lPre ON lProd.ListaDePrecios = lPre.Codigo " 
+                "JOIN dbo.Productos  P ON lProd.Producto = P.Codigo " 
+                "JOIN dbo.TiposDeProducto  TP ON P.TipoDeProducto = TP.Codigo " 
+                f"WHERE TP.Nombre = 'Postpago' and P.Visible = 1 and P.Nombre = '{stok}';"
+            )
+            conexion = Sql_conexion(query)
+            data = conexion.get_data()
+            # data = np.asarray(data)
+            if len(data)==0:
+                raise AuthenticationFailed('Producto inexistente en Stok')
+            
+            listaStok = []
+            for dato in data:
+                nombreStok = dato[0]
+                if nombreStok not in listaStok:
+                    listaStok.append(nombreStok)
+            for nstok in listaStok:
+                validacion = nstok == stok
+                if validacion == False:
+                    raise AuthenticationFailed(f'intente usar {nstok} y no {stok}')
         
         try:
             db.create_item('traduccion_equipos_postpago', data)
