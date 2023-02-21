@@ -87,19 +87,19 @@ def adminProductView(request):
             conexion = Sql_conexion(query)
             data = conexion.get_data()
         #     # data = np.asarray(data)
-            raise AuthenticationFailed(f'{stok} en tamaño {len(data)}' )
+            
             if len(data)==0:
                 raise AuthenticationFailed('Producto inexistente en Stok')
             
-        #     listaStok = []
-        #     for dato in data:
-        #         nombreStok = dato[0]
-        #         if nombreStok not in listaStok:  
-        #             listaStok.append(nombreStok)
-        #     for nstok in listaStok:
-        #         validacion = nstok == stok
-        #         if validacion == False:
-        #             raise AuthenticationFailed(f'intente usar {nstok} y no {stok}')
+            listaStok = []
+            for dato in data:
+                nombreStok = dato[0]
+                if nombreStok not in listaStok:  
+                    listaStok.append(nombreStok)
+            for nstok in listaStok:
+                validacion = nstok == stok
+                if validacion == False:
+                    raise AuthenticationFailed(f'intente usar {nstok} y no {stok}')
 
 
         db.replace_item('traduccion_equipos_prepago',data)
