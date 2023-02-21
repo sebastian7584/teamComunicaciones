@@ -153,18 +153,15 @@ def translateProductView(request):
                         precioVtaDistribuidorSinIva,
                         precioVtaDistribuidorConIva,
                         traductor[nombre]['iva'])
-                        newData.append(updatePrices.returnData())
+                        itemData = updatePrices.returnData()
+                        newData.append(itemData[0])
+                        crediminuto.append(itemData[0][0],itemData[1])
             except KeyError:
                 crear.append([data[i][0]])
                 validate = False
         if validate:
             dataResponse = newData
-            for dato in dataResponse:
-                try:
-                    tempData = [dato[0],(int(dato[14])*1.19)+2380+20000]
-                except Exception as e:
-                    raise AuthenticationFailed(e)
-                crediminuto.append(tempData)
+            
         else:
             dataResponse = crear
         response = {'validate': validate, 'data':dataResponse , 'crediminuto':crediminuto}
@@ -429,10 +426,12 @@ class UpdatePrices:
     def newfintechOficinasTeamSinIva(self):
         if self.iva == '1':
             self.fintechOficinasTeamSinIva = (self.precioPubicoConIva + 60000 - 2380) / 1.19
+            self.fintechOficinasTeamConIva = (self.fintechOficinasTeamSinIva * 1.19) + 2380 + 20000
         else:
             # 933064 es la base del iva, cualquier cambio en base mover aca
             baseIva = 933064
             self.fintechOficinasTeamSinIva = (self.precioPubicoConIva + 60000 - 2380)
+            self.fintechOficinasTeamConIva = (self.fintechOficinasTeamSinIva) + 2380 + 20000
             if self.fintechOficinasTeamSinIva > baseIva:
                 self.fintechOficinasTeamSinIva = baseIva
 
@@ -475,26 +474,30 @@ class UpdatePrices:
         if (type(self.fintechZonificacionSinIva)) == float : self.fintechZonificacionSinIva  = round(self.fintechZonificacionSinIva ,2)
         if (type(self.oficinaMovilSinIva)) == float : self.oficinaMovilSinIva  = round(self.oficinaMovilSinIva ,2)
         if (type(self.elianaRodas)) == float : self.elianaRodas  = round(self.elianaRodas ,2)
+        if (type(self.fintechOficinasTeamConIva)) == float : self.fintechOficinasTeamConIva  = round(self.fintechOficinasTeamConIva ,0)
     
     def returnData(self):
         self.formatoData()
         return [
-            str(self.producto),
-            str(self.costoActual),
-            str(self.precioPubicoSinIva),
-            str(self.subdistribuidorSinIva),
-            str(self.freeMobileStore),
-            str(self.cliente0A5MesesSinIva),
-            str(self.cliente6A23MesesSinIva),
-            str(self.clienteMayorA24MesesSinIva),
-            str(self.clienteDescuentoKitPrepagoSinIva),
-            str(self.distritadosSinIva),
-            str(self.premiumSinIva),
-            str(self.tramitarSinIva),
-            str(self.peopleSinIva),
-            str(self.cooservunalSinIva),
-            str(self.fintechOficinasTeamSinIva),
-            str(self.fintechZonificacionSinIva),
-            str(self.oficinaMovilSinIva),
-            str(self.elianaRodas),
-            ]
+           [ 
+                str(self.producto),
+                str(self.costoActual),
+                str(self.precioPubicoSinIva),
+                str(self.subdistribuidorSinIva),
+                str(self.freeMobileStore),
+                str(self.cliente0A5MesesSinIva),
+                str(self.cliente6A23MesesSinIva),
+                str(self.clienteMayorA24MesesSinIva),
+                str(self.clienteDescuentoKitPrepagoSinIva),
+                str(self.distritadosSinIva),
+                str(self.premiumSinIva),
+                str(self.tramitarSinIva),
+                str(self.peopleSinIva),
+                str(self.cooservunalSinIva),
+                str(self.fintechOficinasTeamSinIva),
+                str(self.fintechZonificacionSinIva),
+                str(self.oficinaMovilSinIva),
+                str(self.elianaRodas),
+            ],
+            self.fintechOficinasTeamConIva,
+        ]
