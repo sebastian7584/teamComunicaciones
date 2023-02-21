@@ -32,13 +32,13 @@ def adminProductPostpagoView(request):
                 f"WHERE TP.Nombre = 'Postpago' and P.Visible = 1 and P.Nombre = '{stok}';"
             )
             conexion = Sql_conexion(query)
-            data = conexion.get_data()
+            data2 = conexion.get_data()
             # data = np.asarray(data)
-            if len(data)==0:
+            if len(data2)==0:
                 raise AuthenticationFailed('Producto inexistente en Stok')
             
             listaStok = []
-            for dato in data:
+            for dato in data2:
                 nombreStok = dato[0]
                 if nombreStok not in listaStok:
                     listaStok.append(nombreStok)
