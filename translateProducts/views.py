@@ -155,8 +155,8 @@ def translateProductView(request):
                         traductor[nombre]['iva'])
                         itemData = updatePrices.returnData()
                         newData.append(itemData[0])
-                        raise AuthenticationFailed(str(itemData[1])[:-2])
-                        crediminuto.append(itemData[1])
+                        raise AuthenticationFailed(itemData[0][0])
+                        crediminuto.append(str(itemData[1])[:-2])
             except KeyError:
                 crear.append([data[i][0]])
                 validate = False
