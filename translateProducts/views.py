@@ -75,20 +75,21 @@ def adminProductView(request):
         data['iva']=iva
         data['active']=active
 
-        # if active == '1':
-        #     query= (
-        #         "SELECT TOP(1000) P.Nombre, lPre.nombre, ValorBruto "  
-        #         "FROM dbo.ldpProductosXAsociaciones lProd " 
-        #         "JOIN dbo.ldpListadePrecios  lPre ON lProd.ListaDePrecios = lPre.Codigo " 
-        #         "JOIN dbo.Productos  P ON lProd.Producto = P.Codigo " 
-        #         "JOIN dbo.TiposDeProducto  TP ON P.TipoDeProducto = TP.Codigo " 
-        #         f"WHERE TP.Nombre = 'Prepagos' and P.Visible = 1 and P.Nombre = '{stok}';"
-        #     )
-        #     conexion = Sql_conexion(query)
-        #     data = conexion.get_data()
+        if active == '1':
+            query= (
+                "SELECT TOP(1000) P.Nombre, lPre.nombre, ValorBruto "  
+                "FROM dbo.ldpProductosXAsociaciones lProd " 
+                "JOIN dbo.ldpListadePrecios  lPre ON lProd.ListaDePrecios = lPre.Codigo " 
+                "JOIN dbo.Productos  P ON lProd.Producto = P.Codigo " 
+                "JOIN dbo.TiposDeProducto  TP ON P.TipoDeProducto = TP.Codigo " 
+                f"WHERE TP.Nombre = 'Prepagos' and P.Visible = 1 and P.Nombre = '{stok}';"
+            )
+            conexion = Sql_conexion(query)
+            data = conexion.get_data()
         #     # data = np.asarray(data)
-        #     if len(data)==0:
-        #         raise AuthenticationFailed('Producto inexistente en Stok')
+            raise AuthenticationFailed(f'{stok} en tamaño {len(data)}' )
+            if len(data)==0:
+                raise AuthenticationFailed('Producto inexistente en Stok')
             
         #     listaStok = []
         #     for dato in data:
