@@ -101,7 +101,7 @@ def adminProductView(request):
                 if validacion == False:
                     raise AuthenticationFailed(f'intente usar {nstok} y no {stok}')
 
-        raise AuthenticationFailed(f'{data}')
+        
         db.replace_item('traduccion_equipos_prepago',data)
         return Response({'s':'s'})
         
