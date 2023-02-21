@@ -119,6 +119,7 @@ def translateProductView(request):
         data = json.loads(data)
         translates = db.read_items('traduccion_equipos_prepago')
         crear =[]
+        crediminuto=[]
         newData = []
         lista=[]
         traductor = {}
@@ -158,9 +159,12 @@ def translateProductView(request):
                 validate = False
         if validate:
             dataResponse = newData
+            for dato in dataResponse:
+                tempData = [dato[0],dato[14]]
+                crediminuto.append(tempData)
         else:
             dataResponse = crear
-        response = {'validate': validate, 'data':dataResponse }
+        response = {'validate': validate, 'data':dataResponse , 'crediminuto':crediminuto}
 
         return Response(response)
 
