@@ -82,7 +82,7 @@ def adminProductView(request):
                 "JOIN dbo.ldpListadePrecios  lPre ON lProd.ListaDePrecios = lPre.Codigo " 
                 "JOIN dbo.Productos  P ON lProd.Producto = P.Codigo " 
                 "JOIN dbo.TiposDeProducto  TP ON P.TipoDeProducto = TP.Codigo " 
-                f"WHERE TP.Nombre = 'Postpago' and P.Visible = 1 and P.Nombre = '{stok}';"
+                f"WHERE TP.Nombre = 'Prepagos' and P.Visible = 1 and P.Nombre = '{stok}';"
             )
             conexion = Sql_conexion(query)
             data = conexion.get_data()
