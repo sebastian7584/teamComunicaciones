@@ -97,7 +97,7 @@ def adminProductView(request):
                 if nombreStok not in listaStok:  
                     listaStok.append(nombreStok)
             for nstok in listaStok:
-                raise AuthenticationFailed('{nstok} y {stok}')
+                raise AuthenticationFailed(f'{nstok} y {stok}')
                 validacion = nstok == stok
                 if validacion == False:
                     raise AuthenticationFailed(f'intente usar {nstok} y no {stok}')
