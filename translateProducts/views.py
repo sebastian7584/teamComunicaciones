@@ -61,7 +61,7 @@ def adminProductView(request):
     
     if request.method == "DELETE":
         equipo =request.data['equipo']
-        raise AuthenticationFailed(equipo)
+        raise AuthenticationFailed('errorcito')
         
         try:
             db.delete_item('traduccion_equipos_prepago',equipo)
