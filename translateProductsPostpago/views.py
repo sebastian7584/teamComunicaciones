@@ -115,6 +115,7 @@ def translateProductPostpagoView(request):
         data = json.loads(data)
         translates = db.read_items('traduccion_equipos_postpago')
         crear =[]
+        crediminuto=[]
         newData = []
         lista=[]
         traductor = {}
@@ -147,6 +148,7 @@ def translateProductPostpagoView(request):
                 validate = False
         if validate:
             dataResponse = newData
+           
         else:
             dataResponse = crear
         response = {'validate': validate, 'data':dataResponse }
