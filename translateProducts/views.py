@@ -160,7 +160,10 @@ def translateProductView(request):
         if validate:
             dataResponse = newData
             for dato in dataResponse:
-                tempData = [dato[0],((dato[14])*1.19)+2380+20000]
+                try:
+                    tempData = [dato[0],((dato[14])*1.19)+2380+20000]
+                except Exception as e:
+                    raise AuthenticationFailed(e)
                 crediminuto.append(tempData)
         else:
             dataResponse = crear
